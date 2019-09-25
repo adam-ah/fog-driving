@@ -1,3 +1,6 @@
+import { AnaglyphEffect } from './anaglyphEffect.js';
+import * as THREE from './three.module.js';
+
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -144,9 +147,16 @@ var prevTime = performance.now();
 var speedCnt = 0;
 var totalMovement = 0;
 
+var width = window.innerWidth || 2;
+var height = window.innerHeight || 2;
+
+var effect = new AnaglyphEffect(renderer);
+effect.setSize(width, height);
+
 function animate() {
     requestAnimationFrame(animate);
-    renderer.render(scene, camera);
+    // renderer.render(scene, camera);
+    effect.render( scene, camera );
 
     if (!enableAnim) {
         return;
