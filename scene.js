@@ -15,7 +15,7 @@ var renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-camera.position.x = -1.8 / 2 + .3;
+camera.position.x = 1.8 / 2 - .3;
 camera.position.y = 1.1;
 camera.position.z = 0;
 
