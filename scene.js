@@ -3,6 +3,9 @@ import * as THREE from './three.module.js';
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+// camera.setFocalLength(1);
+
+var movement = parseFloat(setSpeed) || .2;
 
 scene.background = new THREE.Color(0xeeeeee);
 // scene.fog = new THREE.FogExp2( 0xeeeeee, 0.03 );
@@ -153,10 +156,18 @@ var height = window.innerHeight || 2;
 var effect = new AnaglyphEffect(renderer);
 effect.setSize(width, height);
 
+if (nofog) {
+    scene.fog = new THREE.Fog(0xeeeeee, 0, 1500);
+}
+
 function animate() {
     requestAnimationFrame(animate);
-    // renderer.render(scene, camera);
-    effect.render( scene, camera );
+    
+    if (no3d) {
+        renderer.render(scene, camera);
+    } else {
+        effect.render(scene, camera);
+    }
 
     if (!enableAnim) {
         return;
@@ -168,7 +179,6 @@ function animate() {
     // sphere1.position.z += 0.4;
     // sphere2.position.z += 0.4;
     // spheres.position.z += 0.5;
-    var movement = .2
 
     light1.position.z += movement;
     light2.position.z += movement;
