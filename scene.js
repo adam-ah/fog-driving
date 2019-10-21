@@ -8,8 +8,8 @@ var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHei
 var movement = parseFloat(setSpeed) || .2;
 
 scene.background = new THREE.Color(0xeeeeee);
-// scene.fog = new THREE.FogExp2( 0xeeeeee, 0.03 );
-scene.fog = new THREE.Fog(0xeeeeee, -150, 150);
+// scene.fog = new THREE.FogExp2( 0xeeeeee, 0.04    );
+scene.fog = new THREE.Fog(0xeeeeee, -20, 40);
 
 // var light = new THREE.AmbientLight( 0xffffff ); 
 // scene.add( light );
@@ -31,53 +31,56 @@ var geometry1 = new THREE.SphereGeometry(.1, 32, 32);
 var sphere1 = new THREE.Mesh(geometry1, material);
 var light1 = new THREE.PointLight(0xff0000, .5, 50);
 light1.add(sphere1);
-light1.position.x = 1.8 / 2;
-light1.position.y = 0.5;
+light1.position.x = 1.35 / 2;
+light1.position.y = 1;
 light1.updateMatrix();
-scene.add(light1);
 
 var geometry2 = new THREE.SphereGeometry(.1, 32, 32);
 var sphere2 = new THREE.Mesh(geometry2, material);
 var light2 = new THREE.PointLight(0xff0000, .5, 50);
 light2.add(sphere2);
-light2.position.x = -1.8 / 2;
-light2.position.y = 0.5;
+light2.position.x = -1.35 / 2;
+light2.position.y = 1;
 light2.updateMatrix();
-scene.add(light2);
 
-// sphere2.position.x = -1.8 / 2;
-// sphere2.position.y = 0;
-// sphere2.updateMatrix();
-
-// var spheresGeometry = new THREE.Geometry();
-// spheresGeometry.merge(sphere1.geometry, sphere1.matrix);
-// spheresGeometry.merge(sphere2.geometry, sphere2.matrix);
-
-// var material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-// var spheres = new THREE.Mesh(spheresGeometry, material);
-// scene.add(spheres);
-
-// spheres.position.z = -300;
-// spheres.position.x = 0;
-// spheres.position.y = .5;
+var groupCar = new THREE.Group();
+groupCar.add( light1 );
+groupCar.add( light2 );
 // BRAKE LIGHTS
 
+// CAR
+var geometry = new THREE.BoxGeometry( 2, 0.9, 4 );
+var material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
+var carBottom = new THREE.Mesh( geometry, material );
+carBottom.position.z = -2;
+carBottom.position.y = 0.8;
+
+var geometry = new THREE.BoxGeometry( 1.8, 0.4, 2 );
+var material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
+var carTop = new THREE.Mesh( geometry, material );
+carTop.position.z = -2;
+carTop.position.y = 0.8 + 0.9/2 + 0.4/2;
+
+
+groupCar.add(carBottom);
+groupCar.add(carTop);
+// CAR
+
+scene.add( groupCar );
 
 // LINES
-var geometry1 = new THREE.BoxGeometry(.1, 0.1, 1000);
-var cube1 = new THREE.Mesh(geometry1);
+var lineGeometry = new THREE.BoxGeometry(.1, 0.1, 1000);
+var cube1 = new THREE.Mesh(lineGeometry);
 cube1.position.x = 3.3 / 2 + .1;
 cube1.position.y = 0;
 cube1.updateMatrix();
 
-var geometry2 = new THREE.BoxGeometry(.1, 0.1, 1000);
-var cube2 = new THREE.Mesh(geometry2);
+var cube2 = new THREE.Mesh(lineGeometry);
 cube2.position.x = -3.3 / 2 - .1;
 cube2.position.y = 0;
 cube2.updateMatrix();
 
-var geometry3 = new THREE.BoxGeometry(.1, 0.1, 1000);
-var cube3 = new THREE.Mesh(geometry2);
+var cube3 = new THREE.Mesh(lineGeometry);
 cube3.position.x = 3.3 + 3.3 / 2 + .1 + .1;
 cube3.position.y = 0;
 cube3.updateMatrix();
@@ -94,55 +97,18 @@ scene.add(lines);
 
 // ROAD 
 var geometryRoad = new THREE.BoxGeometry(3.3, 0.1, 1000);
-var cubeRoad = new THREE.Mesh(geometryRoad);
 var material = new THREE.MeshPhongMaterial({ color: 0x333333 });
 var road = new THREE.Mesh(geometryRoad, material);
 scene.add(road);
 
 var geometryRoad = new THREE.BoxGeometry(3.3, 0.1, 1000);
-var cubeRoad = new THREE.Mesh(geometryRoad);
 var material = new THREE.MeshPhongMaterial({ color: 0x333333 });
 var road = new THREE.Mesh(geometryRoad, material);
 road.position.x = 3.3 + .2;
 road.position.y = 0;
 scene.add(road);
-// ROAD RIGHT
 
-// var sphere = new THREE.SphereBufferGeometry(0.1, 8, 8);
-// light1 = new THREE.PointLight(0xff0000, 2, 50);
-// light1.add(new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0xff0000 })));
-// light1.position.x = 0;
-// light1.position.y = 1;
-// light1.position.z = -5;
-// scene.add(light1);
-
-light1.position.z = -200;
-light2.position.z = -200;
-
-// var loader = new THREE.FontLoader();
-
-// loader.load('helvetiker_regular.typeface.json', function (font) {
-//     var textGeo = new THREE.TextGeometry('Hello three.js!', {
-//         font: font,
-//         size: 1,
-//         height: 0,
-//         curveSegments: 12,
-//         bevelEnabled: false,
-//         bevelThickness: 0,
-//         bevelSize: 0,
-//         bevelOffset: 0,
-//         bevelSegments: 5
-//     });
-//     var material = new THREE.MeshBasicMaterial({ color: 0x000000 });
-//     material.fog = false;
-//     textGeo.computeBoundingBox();
-//     textGeo.computeVertexNormals();
-//     textGeo = new THREE.BufferGeometry().fromGeometry( textGeo );
-//     textMesh1 = new THREE.Mesh( textGeo, material );
-//     textMesh1.position.y = 6;
-//     textMesh1.position.z = -10;
-//     scene.add(textMesh1);
-// });
+groupCar.position.z = -50;
 
 var enableAnim = true;
 
@@ -173,15 +139,7 @@ function animate() {
         return;
     }
 
-    // cube.rotation.x += 0.01;
-    // cube.rotation.y += 0.01;
-
-    // sphere1.position.z += 0.4;
-    // sphere2.position.z += 0.4;
-    // spheres.position.z += 0.5;
-
-    light1.position.z += movement;
-    light2.position.z += movement;
+    groupCar.position.z += movement;
 
     totalMovement += movement;
     speedCnt += 1;
@@ -189,7 +147,7 @@ function animate() {
     if (speedCnt == 10) {
         var speedMps = totalMovement / ((performance.now() - prevTime) / 1000);
         var speedKmph = parseInt(speedMps * 3.6);
-        var distance = parseInt(light1.position.z);
+        var distance = parseInt(groupCar.position.z);
         document.getElementById('info').innerText = "Speed: # Distance: $".replace("#", speedKmph).replace("$", distance);
         prevTime = performance.now();
         speedCnt = 0;
