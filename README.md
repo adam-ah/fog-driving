@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/210758390.svg)](https://zenodo.org/badge/latestdoi/210758390)
+
 # fog-driving
 
 Open source driving simulator in fog, using [anaglyph rendering](https://en.wikipedia.org/wiki/Anaglyph_3D).
